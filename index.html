@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Ray-Ban Display Analysis — Youngbin Choi</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --green:    #2BAE66;
+    --green-dk: #1e8a4f;
+    --green-lt: #d4f0e2;
+    --green-xs: #edf8f2;
+    --cream:    #FCF6F5;
+    --ink:      #141414;
+    --mid:      #444;
+    --soft:     #888;
+    --border:   #dde8e3;
+    --nav-h:    68px;
+    --white:    #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.82;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: var(--white);
+    border-bottom: 2px solid var(--green);
+    display: grid;
+    grid-template-columns: 72px 1fr 72px;
+    align-items: center;
+    padding: 0 28px;
+    z-index: 200;
+    gap: 12px;
+  }
+
+  .logo-circle {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--green);
+    background: var(--green-xs);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color: var(--green-dk);
+    text-align: center;
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+
+  .logo-circle.right { margin-left: auto; }
+
+  .nav-center { text-align: center; }
+
+  .nav-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .nav-sub {
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: .12em;
+    color: var(--green);
+    margin-top: 2px;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: var(--green-xs);
+    border-bottom: 1px solid var(--green-lt);
+    padding: calc(var(--nav-h) + 72px) 32px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 110%, rgba(43,174,102,.22) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--green-dk);
+    border: 1px solid rgba(43,174,102,.5);
+    background: rgba(43,174,102,.08);
+    padding: 5px 16px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+
+  .hero h1 {
+    font-size: clamp(22px, 4.2vw, 44px);
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+    max-width: 780px;
+    margin: 0 auto 18px;
+    letter-spacing: -.02em;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    color: var(--mid);
+    max-width: 520px;
+    margin: 0 auto 40px;
+    font-style: italic;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .hero-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--soft);
+  }
+
+  .hero-tag strong { color: var(--ink); font-weight: 600; }
+  .hero-dot { color: var(--green); }
+
+  /* ─── SECTION NAV ─── */
+  .section-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 100;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .section-nav::-webkit-scrollbar { display: none; }
+
+  .section-nav-inner {
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    max-width: 900px;
+    margin: 0 auto;
+    white-space: nowrap;
+  }
+
+  .section-nav a {
+    display: inline-block;
+    padding: 14px 18px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--soft);
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+
+  .section-nav a:hover {
+    color: var(--green);
+    border-bottom-color: var(--green);
+  }
+
+  /* ─── MAIN ─── */
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 64px 32px 80px;
+  }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    margin-bottom: 72px;
+    padding-bottom: 72px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section:last-of-type { border-bottom: none; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 14px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 20px; height: 2px;
+    background: var(--green);
+    flex-shrink: 0;
+  }
+
+  h2 {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -.02em;
+    line-height: 1.25;
+    margin-bottom: 28px;
+  }
+
+  p {
+    color: var(--mid);
+    margin-bottom: 22px;
+    font-weight: 300;
+  }
+
+  p:last-child { margin-bottom: 0; }
+
+  blockquote {
+    margin: 36px 0;
+    padding: 24px 28px;
+    background: var(--green-lt);
+    border-left: 4px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--green-dk);
+    line-height: 1.75;
+  }
+
+  /* ─── VIDEO BLOCK ─── */
+  .video-block {
+    margin: 40px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--white);
+    box-shadow: 0 2px 20px rgba(43,174,102,.08);
+  }
+
+  .video-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 18px;
+    background: var(--green-lt);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .video-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .video-dot:nth-child(1) { background: #e07070; }
+  .video-dot:nth-child(2) { background: #e0b870; }
+  .video-dot:nth-child(3) { background: var(--green); }
+
+  .video-label-text {
+    margin-left: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--green-dk);
+  }
+
+  .video-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--green-xs) 0%, var(--green-lt) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    color: var(--green-dk);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .08em;
+  }
+
+  .play-btn {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    opacity: .9;
+    transition: transform .2s, opacity .2s;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(43,174,102,.35);
+  }
+
+  .play-btn:hover { transform: scale(1.08); opacity: 1; }
+
+  .play-btn::after {
+    content: '';
+    border-style: solid;
+    border-width: 10px 0 10px 20px;
+    border-color: transparent transparent transparent #fff;
+    margin-left: 5px;
+  }
+
+  .video-caption {
+    padding: 12px 18px;
+    font-size: 12px;
+    color: var(--soft);
+    font-style: italic;
+    border-top: 1px solid var(--border);
+  }
+
+  .video-caption a { color: var(--green); text-decoration: none; }
+  .video-caption a:hover { text-decoration: underline; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--green);
+  }
+
+  .footer-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 32px 40px;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .footer-logo-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .footer-logo-circle {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,.45);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.7);
+    text-align: center;
+    line-height: 1.3;
+    flex-shrink: 0;
+  }
+
+  .footer-brand-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -.01em;
+  }
+
+  .footer-brand-sub {
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,.55);
+    margin-top: 2px;
+  }
+
+  .footer-brand-desc {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,.65);
+    line-height: 1.65;
+  }
+
+  .footer-col-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.45);
+    margin-bottom: 16px;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    font-weight: 400;
+    color: rgba(255,255,255,.78);
+    text-decoration: none;
+    transition: color .18s;
+  }
+
+  .footer-links a:hover { color: #fff; }
+
+  .footer-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .footer-info-item strong {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.45);
+    margin-bottom: 3px;
+  }
+
+  .footer-info-item span {
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(255,255,255,.78);
+    line-height: 1.5;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.18);
+    padding: 18px 32px;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .footer-bottom-copy {
+    font-size: 11px;
+    color: rgba(255,255,255,.45);
+    letter-spacing: .06em;
+  }
+
+  .footer-bottom-badge {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    background: rgba(255,255,255,.1);
+    padding: 4px 14px;
+    border-radius: 100px;
+  }
+</style>
+</head>
+<body>
+
+<!-- FIXED NAV -->
+<nav>
+  <div class="logo-circle">Per&shy;sonal<br>Logo</div>
+  <div class="nav-center">
+    <div class="nav-title">Ray-Ban Display Analysis</div>
+    <div class="nav-sub">EST 202 · Youngbin Choi · 2025</div>
+  </div>
+  <div class="logo-circle right">Group<br>Logo</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Media &amp; Communication Studies · EST 202</div>
+  <h1>The Socio-Technical Transformation of Vision in the Ray-Ban Display</h1>
+  <p class="hero-sub">An Analysis of Meta's Internet Glasses through Frances Bonner's 4Cs Framework</p>
+  <div class="hero-meta">
+    <span class="hero-tag">By <strong>Youngbin Choi</strong></span>
+    <span class="hero-dot">·</span>
+    <span class="hero-tag">Expertise Paper</span>
+    <span class="hero-dot">·</span>
+    <span class="hero-tag">2025</span>
+  </div>
+</div>
+
+<!-- SECTION NAV -->
+<div class="section-nav">
+  <div class="section-nav-inner">
+    <a href="#introduction">Introduction</a>
+    <a href="#corporation">Corporation</a>
+    <a href="#corporeality">Corporeality</a>
+    <a href="#cyberspace">Cyberspace</a>
+    <a href="#criminality">Criminality</a>
+    <a href="#conclusion">Conclusion</a>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main>
+
+  <!-- INTRODUCTION -->
+  <section class="section" id="introduction">
+    <div class="section-label">Introduction</div>
+    <h2>Setting the Stage for Internet Glasses</h2>
+    <p>The leap in the development of digital technology significantly influenced human daily lives by transforming the way of perceiving and engaging with the world. On September 18th, 2025, Mark Zuckerberg came up on the stage with striking glasses on — a smart glasses jointly developed by Ray-Ban and Meta. The product is highlighted with the integration of a display into the right lens and a wristband that enables gesture-based input through the sophisticated convergence of technologies.</p>
+    <p>The Ray-Ban Display, categorized as a future wearable often referred to as "internet glasses," merges real-time internet-based data with the visual information that users are in access to, augmenting their vision. By the direct integration of digital information into the human sensory experience, the technology transforms the act of "seeing" into an access to a digital interface. Therefore, the Ray-Ban Display is not merely a fashion accessory, but a medium that influences human daily lives, perception, and communication, standing as one of the technological cornerstones that marks the paradigm shift.</p>
+    <p>This paper analyzes Meta's internet glasses product, the Ray-Ban Display, through the perspectives of Frances Bonner's 4Cs Framework: Corporation, Corporeality, Cyberspace, and Criminality. This framework examines how the technological restructuring of social implications occurs across social, bodily, and legal domains. Using this approach, the paper discovers that the Ray-Ban Display is not a mere product of technological innovation but a socio-technical apparatus that incorporates corporate control, bodily extension, reorganization of cyberspace, and the destabilization of legal exercise.</p>
+
+    <div class="video-block">
+      <div class="video-header">
+        <div class="video-dot"></div><div class="video-dot"></div><div class="video-dot"></div>
+        <span class="video-label-text">Official Reveal — Meta Connect 2025</span>
+      </div>
+      <div class="video-placeholder">
+        <div class="play-btn"></div>
+        <span>YouTube Embed — Meta Ray-Ban Display @ Connect 2025</span>
+      </div>
+      <div class="video-caption">
+        Figure 1. — "Meet the world's most advanced AI glasses | Meta Ray-Ban Display @ Connect 2025." Ray-Ban &amp; Meta, September 18, 2025.
+        <a href="https://www.youtube.com/watch?v=gZ9IsB72nVk" target="_blank">youtube.com/watch?v=gZ9IsB72nVk</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CORPORATION -->
+  <section class="section" id="corporation">
+    <div class="section-label">I — Corporation</div>
+    <h2>Corporate Hegemony and the Branded Gaze</h2>
+    <p>The Ray-Ban Display is not merely a wearable technology product, but an icon of Meta's corporate socio-technological hegemony. Through the device, Meta extends and embeds its corporate branding into a part of individuals' daily lives and culture, eventually transforming the act of 'seeing' itself into a form of experience branded by Meta — based on the sophistication of technology and dependency on the Meta ecosystem.</p>
+    <p>The first potential strategy enabling Meta to achieve this goal is through deepening technological dependency on the Meta ecosystem. Meta has already achieved significant success in the social media market with Instagram, wielding considerable influence over social communication patterns and digital culture. By the integration of its proprietary AI, cloud infrastructure, Meta View application, and Instagram connectivity, Meta reinforces both the technological and cultural monopoly, restricting third-party products from entering its ecosystem and thereby consolidating its market share. In addition, leveraging the identity of glasses as fashion and technology, Meta constructs an effective branding strategy and cultivates social capital.</p>
+    <p>As intensified platform dependency through the formation of a monopoly and accumulated social capital confines consumers within the Meta ecosystem, making users integrate the Ray-Ban Display more intimately into their daily lives, Meta's social dominance intensifies. Within this monopoly system, users are allowed access to their first-person data streams only under Meta's terms of service, wherein such data are stored and analyzed through Meta's servers and ultimately capitalized by the corporation. These first-person data — which contain what users see and experience — hold immense value as data resources. Such data function as essential training material for advancing Meta AI Vision's machine learning, while also enabling Meta to refine its algorithms to enhance user engagement and design targeted advertising systems that cater to users' detailed behaviors and latent needs.</p>
+
+    <blockquote>Within this structure, individual experience is treated as a corporate asset, and users become the extended sensors of the corporation to collect data.</blockquote>
+
+    <p>Despite the rapid technological advancement of Meta's internet glasses, the current Ray-Ban Display remains largely regarded as a technological demo or prototype that demonstrates commercial potential and a technical roadmap rather than a fully practical consumer product. What made it possible for Meta to continue research and development is its deep pockets, allowing for indefinite development spending. These deep pockets are sustained by capital accumulated from Meta's past successes and the ongoing support of investors, who are not liable for the ethical and legal responsibilities surrounding personal data potentially associated with the product.</p>
+  </section>
+
+  <!-- CORPOREALITY -->
+  <section class="section" id="corporeality">
+    <div class="section-label">II — Corporeality</div>
+    <h2>The Cyborg Eye: Bodily Extension and Cognitive Reconfiguration</h2>
+    <p>In Frances Bonner's 4Cs framework, Corporeality refers to the material and bodily dimensions of technology and how they extend or replace the human body. Within this framework, the Meta Ray-Ban Display represents the technological extension of a human body part: the eyes. The corporeal dimension of this product marks not merely a tool for vision correction or a screen with close proximity, but an integrated sensory apparatus composed of data, perception, and cognition.</p>
+    <p>The device consists of a camera that captures the image of what the user is seeing, microphones, and a micro-display system — enabling users to capture photos, record videos, receive notifications, and access information through voice commands or hand gestures. The device connects wirelessly with the user's smartphone and Meta's cloud ecosystem.</p>
+    <p>This marks the first step toward Donna Haraway's concept of the 'cyborg' — a fusion of organic and technological life and the transition of the human body from a closed biological system to an open interface. The human retina, which was a passive optical medium, now operates as an active computational surface that both receives and transmits data with the help of a Ray-Ban Display. Through embedded sensors and a digital display layer, the glasses blend digital augmentation with the natural view, producing a composite vision in which the human eye becomes inseparable from networked perception.</p>
+    <p>Meta's Ray-Ban Display corporeal dimension does not end by affecting the single sensory organ: it marks the reconditioning of human perception processes and even human consciousness. The Meta AI transitions to filter through real-time context information and image recognition faster than the physical vision is being perceived. This can make the algorithmic interpretation that the AI provides be prioritized over direct human interpretations, leading users to rely on computational cues as default extensions of their own visual reasoning. The corporeal substitution of the eye therefore evolves into a cognitive reconfiguration of thought itself — illustrating how technology not only replaces a sensory organ but also begins to recondition the processes of human perception and judgment.</p>
+
+    <div class="video-block">
+      <div class="video-header">
+        <div class="video-dot"></div><div class="video-dot"></div><div class="video-dot"></div>
+        <span class="video-label-text">Contextual Reference — The Future of Augmented Reality (2030)</span>
+      </div>
+      <div class="video-placeholder">
+        <div class="play-btn"></div>
+        <span>YouTube Embed — Future Business Tech, 2019</span>
+      </div>
+      <div class="video-caption">
+        Figure 2. — Future Business Tech. "The Future of Augmented Reality (2030)." YouTube, December 6, 2019.
+        <a href="https://youtu.be/D8V2nxeWHmI" target="_blank">youtu.be/D8V2nxeWHmI</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CYBERSPACE -->
+  <section class="section" id="cyberspace">
+    <div class="section-label">III — Cyberspace</div>
+    <h2>Dissolving Boundaries: Physical Space as Networked Infrastructure</h2>
+    <p>The term cyberspace is often defined as a digital simulation of physical spaces, but Meta's Ray-Ban Display represents the evolution of cyberspace — where it dissolves the boundaries between the physical and digital domains. The technology closely related to the Ray-Ban Display is augmented reality (AR); the glasses integrate the user's natural human vision with layers of information generated algorithmically or derived from the internet, producing a hybrid perceptual vision.</p>
+    <p>This means that cyberspace no longer exists as a separate virtual world entered through screens but also exists as an extension of the physical environment. Every scenario, location, and interaction has the potential to be mediated by Meta's networked data infrastructure, reflected in the lens right in front of the human eyes. As a result, the user inhabits a dual space intertwined with the physical and the digital, where reality itself becomes a cyberpunk through the interface.</p>
+    <p>Meta's Ray-Ban Display transforms everyday perception into an act of mediated sharing. By enabling users to directly record or stream what they are seeing in real time, the device converts private vision into a communicative medium — where the boundary between experience and sharing dissolves. The moments users perceive, including a concert, a landscape, or extreme activities, become instantly transmissible through telepresence technology, allowing distant viewers to inhabit the user's vision. Through seamless integration with Meta's platforms, the glasses embed lived experience directly into the networked archive of cyberspace.</p>
+    <p>However, the Ray-Ban Display does more than dismantle social life in the real world. Meta's integration of the Ray-Ban Display with Instagram enables cyberspace to operate as a feedback loop between lived experience and its digital reflection. The glasses capture the image of others and recognize their identity through Meta AI Vision, allowing users to identify others by overlaying personal data or a bibliography derived from social media directly onto their visual field. Through such integration, Meta effectively turns its social network into a lived cyberspace.</p>
+  </section>
+
+  <!-- CRIMINALITY -->
+  <section class="section" id="criminality">
+    <div class="section-label">IV — Criminality</div>
+    <h2>Surveillance, Vulnerability, and Diffused Legal Accountability</h2>
+    <p>The introduction of cameras in the wearable Ray-Ban Display creates a new danger of involuntary surveillance, where the distinction between observation and violation becomes increasingly unstable. In social and public spaces, individuals can be recorded without consent, their images stored or transmitted in real-time through corporate networks. As the technology's discreet form factor makes recording nearly invisible, traditional social cues of "being watched" lose their effectiveness. As legal frameworks often adapt one step behind the pace of technological development, society risks and a culture of continuous exposure arise.</p>
+    <p>By the integration of vision, sound, and cloud computing, the Ray-Ban Display transforms personal sensory data into a new frontier of digital vulnerability. Every trivial moment and word is potentially uploaded, processed, or stored within Meta's data cloud. In the case such data were to be hacked or leaked, the consequences would be unprecedentedly severe — exposing not only information and text, but whole experiences, including moments, expressions, and relationships that define personal identity. Furthermore, manipulation of visual or auditory streams could distort the user's perception of reality itself, marking a fundamental inversion of privacy.</p>
+    <p>As corporations described by Bonner, Meta's position as a corporation within the legal structure of cyberspace allows it to abuse legal abstraction to avoid full accountability. As Blount states, "In Cyberspace … one of the central problems is that commercial bodies maintain control over information and how it flows, meaning that private interests become the arbiters of the 'freedom of expression.'" Meta, a corporation legally identified as an 'artificial person' with immense capital and legal protection, can defer certain moral and legal responsibility of privacy violations to the individuals who have accepted their terms and conditions. In a scenario where a user records another person or uploads sensitive material without consent, it is interpreted as a matter of personal misuse rather than corporate liability — enabling Meta to benefit from the mass accumulation of surveillance data while externalizing ethical consequences.</p>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section class="section" id="conclusion">
+    <div class="section-label">Conclusion</div>
+    <h2>Human Vision as a Corporate Platform</h2>
+    <p>Through the analysis of Meta's Ray-Ban Display with Frances Bonner's 4Cs framework — Corporation, Corporeality, Cyberspace, and Criminality — this paper has examined how the Ray-Ban Display embodies the convergence of corporate power, human embodiment, networked space, and legal ambiguity. The analysis suggests that the function of this product is not merely an innovative wearable device but a socio-technical mechanism that integrates the user's sensory, cognitive, and social experiences into Meta's corporate ecosystem.</p>
+    <p>Within the corporation framework, Meta may consolidate its socio-technological hegemony through the formation of technological and market monopoly, converting human experience into a capital asset. Through the corporeal framework, the glasses extend one of the human senses — vision — integrating biological perception with algorithmic interpretation. Within the cyberspace framework, the product blurs the boundaries between the physical and digital space, transforming everyday perception into Meta's networked infrastructure and enabling private experience to become shareable and archived. From the criminality framework, the device may expose users and the public to involuntary surveillance and data vulnerability within diffused legal accountability and externalized corporate responsibilities.</p>
+    <p>As the analysis from 4Cs perspectives marks, the Ray-Ban Display signifies a new paradigm in which human vision itself becomes a platform governed by corporate logic.</p>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-brand">
+      <div class="footer-logo-row">
+        <div class="footer-logo-circle">Per&shy;sonal<br>Logo</div>
+        <div>
+          <div class="footer-brand-name">Youngbin Choi</div>
+          <div class="footer-brand-sub">EST 202 · 2025</div>
+        </div>
+      </div>
+      <div class="footer-brand-desc">An expertise paper analyzing Meta's Ray-Ban Display through Frances Bonner's 4Cs Framework, examining corporate, corporeal, spatial, and legal dimensions of wearable technology.</div>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Sections</div>
+      <ul class="footer-links">
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#corporation">I — Corporation</a></li>
+        <li><a href="#corporeality">II — Corporeality</a></li>
+        <li><a href="#cyberspace">III — Cyberspace</a></li>
+        <li><a href="#criminality">IV — Criminality</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Paper Info</div>
+      <div class="footer-info-list">
+        <div class="footer-info-item">
+          <strong>Subject</strong>
+          <span>Ray-Ban Display (Meta, 2025)</span>
+        </div>
+        <div class="footer-info-item">
+          <strong>Framework</strong>
+          <span>Frances Bonner's 4Cs</span>
+        </div>
+        <div class="footer-info-item">
+          <strong>Course</strong>
+          <span>EST 202 · Expertise Paper</span>
+        </div>
+        <div class="footer-info-item">
+          <strong>Institution</strong>
+          <span>Group / Institution Name</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span class="footer-bottom-copy">© 2025 Youngbin Choi · All rights reserved</span>
+    <span class="footer-bottom-badge">EST 202 · Media &amp; Communication Studies</span>
+  </div>
+</footer>
+
+</body>
+</html>
