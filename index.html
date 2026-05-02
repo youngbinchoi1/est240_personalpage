@@ -330,136 +330,36 @@
     background: var(--green);
   }
 
-  .footer-inner {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 56px 40px 40px;
-    display: grid;
-    grid-template-columns: 1.2fr 1fr 1fr;
-    gap: 48px;
-    align-items: start;
-  }
-
-  .footer-logo-row {
+  .footer-simple {
     display: flex;
-    gap: 12px;
+    flex-direction: column;
     align-items: center;
-    margin-bottom: 16px;
+    justify-content: center;
+    gap: 14px;
+    padding: 40px 32px;
   }
 
   .footer-logo-circle {
-    width: 46px; height: 46px;
+    width: 52px; height: 52px;
     border-radius: 50%;
-    border: 2px solid rgba(255,255,255,.45);
+    border: 2px solid rgba(255,255,255,.55);
     background: rgba(255,255,255,.12);
     display: flex; align-items: center; justify-content: center;
     font-size: 9px;
     font-weight: 600;
     letter-spacing: .05em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.8);
+    color: rgba(255,255,255,.85);
     text-align: center;
     line-height: 1.3;
-    flex-shrink: 0;
   }
 
   .footer-brand-name {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     color: #fff;
-    letter-spacing: -.01em;
-  }
-
-  .footer-brand-sub {
-    font-size: 11px;
-    font-weight: 400;
-    color: rgba(255,255,255,.55);
-    margin-top: 2px;
-  }
-
-  .footer-brand-desc {
-    font-size: 13px;
-    font-weight: 300;
-    color: rgba(255,255,255,.65);
-    line-height: 1.65;
-  }
-
-  .footer-col-title {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .2em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.45);
-    margin-bottom: 16px;
-  }
-
-  .footer-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-  }
-
-  .footer-links a {
-    font-size: 13px;
-    font-weight: 400;
-    color: rgba(255,255,255,.78);
-    text-decoration: none;
-    transition: color .18s;
-  }
-
-  .footer-links a:hover { color: #fff; }
-
-  .footer-info-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-
-  .footer-info-item strong {
-    display: block;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.45);
-    margin-bottom: 3px;
-  }
-
-  .footer-info-item span {
-    font-size: 13px;
-    font-weight: 300;
-    color: rgba(255,255,255,.78);
-    line-height: 1.5;
-  }
-
-  .footer-bottom {
-    border-top: 1px solid rgba(255,255,255,.18);
-    padding: 18px 40px;
-    max-width: 860px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-
-  .footer-bottom-copy {
-    font-size: 11px;
-    color: rgba(255,255,255,.45);
     letter-spacing: .06em;
-  }
-
-  .footer-bottom-badge {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: .14em;
     text-transform: uppercase;
-    color: rgba(255,255,255,.4);
-    background: rgba(255,255,255,.1);
-    padding: 4px 14px;
-    border-radius: 100px;
   }
 </style>
 </head>
@@ -594,58 +494,9 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-
-    <div class="footer-brand">
-      <div class="footer-logo-row">
-        <div class="footer-logo-circle">Per&shy;sonal<br>Logo</div>
-        <div>
-          <div class="footer-brand-name">Youngbin Choi</div>
-          <div class="footer-brand-sub">EST 202 · 2025</div>
-        </div>
-      </div>
-      <div class="footer-brand-desc">An expertise paper analyzing Meta's Ray-Ban Display through Frances Bonner's 4Cs Framework, examining corporate, corporeal, spatial, and legal dimensions of wearable technology.</div>
-    </div>
-
-    <div>
-      <div class="footer-col-title">Sections</div>
-      <ul class="footer-links">
-        <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#corporation">I — Corporation</a></li>
-        <li><a href="#corporeality">II — Corporeality</a></li>
-        <li><a href="#cyberspace">III — Cyberspace</a></li>
-        <li><a href="#criminality">IV — Criminality</a></li>
-        <li><a href="#conclusion">Conclusion</a></li>
-      </ul>
-    </div>
-
-    <div>
-      <div class="footer-col-title">Paper Info</div>
-      <div class="footer-info-list">
-        <div class="footer-info-item">
-          <strong>Subject</strong>
-          <span>Ray-Ban Display (Meta, 2025)</span>
-        </div>
-        <div class="footer-info-item">
-          <strong>Framework</strong>
-          <span>Frances Bonner's 4Cs</span>
-        </div>
-        <div class="footer-info-item">
-          <strong>Course</strong>
-          <span>EST 202 · Expertise Paper</span>
-        </div>
-        <div class="footer-info-item">
-          <strong>Institution</strong>
-          <span>Group / Institution Name</span>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    <span class="footer-bottom-copy">© 2025 Youngbin Choi · All rights reserved</span>
-    <span class="footer-bottom-badge">EST 202 · Media &amp; Communication Studies</span>
+  <div class="footer-simple">
+    <div class="footer-logo-circle">Per&shy;sonal<br>Logo</div>
+    <div class="footer-brand-name">Youngbin Choi</div>
   </div>
 </footer>
 
